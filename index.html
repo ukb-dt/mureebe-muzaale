@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMA Peer Reviewer · Abimereki D. Muzaale · Ukubona LLC</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" />
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico"
+        media="(prefers-color-scheme: dark)" />
+
+  <!-- Logo preloads -->
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image" />
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image" />
+
+  <!-- IBM Plex Mono + Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:         #0a0a0b;
+      --bg-surface: #111114;
+      --bg-card:    #17171c;
+      --border:     rgba(255,255,255,0.08);
+      --border-hi:  rgba(255,255,255,0.18);
+      --text:       #e8e6e0;
+      --text-dim:   #7a7870;
+      --text-hint:  #45443f;
+      --accent:     #c8b88a;   /* warm gold — civilizational resonance */
+      --accent-dim: rgba(200,184,138,0.15);
+      --accent-glow:rgba(200,184,138,0.07);
+      --red:        #e05c4b;
+      --mono: 'IBM Plex Mono', monospace;
+      --serif: 'IBM Plex Serif', Georgia, serif;
+      --radius: 4px;
+      --radius-lg: 8px;
+      --spin-dur: 120s;
+    }
+    [data-theme="light"] {
+      --bg:         #f5f3ee;
+      --bg-surface: #eeece7;
+      --bg-card:    #ffffff;
+      --border:     rgba(0,0,0,0.08);
+      --border-hi:  rgba(0,0,0,0.18);
+      --text:       #1a1916;
+      --text-dim:   #6b6960;
+      --text-hint:  #aaa89f;
+      --accent:     #8a6d2c;
+      --accent-dim: rgba(138,109,44,0.10);
+      --accent-glow:rgba(138,109,44,0.05);
+      --red:        #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 52px;
+    }
+    .nav-left {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .nav-logo-wrap {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo-wrap img {
+      width: 28px; height: 28px;
+      object-fit: contain;
+    }
+    .nav-brand {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-dim);
+    }
+    .nav-right {
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .nav-link {
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-dim); transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); text-decoration: none; }
+
+    /* ── THEME TOGGLE ────────────────────────────────────────── */
+    .toggle-btn {
+      background: none; border: 1px solid var(--border-hi);
+      color: var(--text-dim); font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.08em; padding: 4px 10px;
+      border-radius: var(--radius); cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toggle-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      padding: 120px 2rem 80px;
+      max-width: 900px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: start;
+    }
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .hero-name em {
+      font-style: normal;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .hero-degrees {
+      font-size: 11px; letter-spacing: 0.06em;
+      color: var(--text-dim); margin-bottom: 2rem;
+    }
+    .hero-bio {
+      font-size: 13px; color: var(--text-dim);
+      max-width: 540px; line-height: 1.8;
+    }
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+
+    /* ── SPINNING LOGO ───────────────────────────────────────── */
+    .logo-spin-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.75rem; padding-top: 0.5rem;
+    }
+    .logo-orbit {
+      width: 120px; height: 120px;
+      animation: spin360 var(--spin-dur) linear infinite;
+      will-change: transform;
+    }
+    .logo-orbit img {
+      width: 120px; height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+    @keyframes spin360 {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .logo-caption {
+      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-hint); text-align: center; line-height: 1.6;
+    }
+
+    /* ── CHAIN BAR ──────────────────────────────────────────── */
+    .chain-bar {
+      max-width: 900px; margin: 0 auto 4rem;
+      padding: 0 2rem;
+      display: flex; gap: 0; align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .chain-node {
+      flex: 1; padding: 0.8rem 0.6rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      background: var(--bg-surface);
+      transition: background 0.2s;
+    }
+    .chain-node:last-child { border-right: none; }
+    .chain-node:hover { background: var(--bg-card); }
+    .chain-level {
+      font-size: 16px; font-weight: 600; color: var(--accent);
+      display: block; line-height: 1;
+    }
+    .chain-name {
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); display: block; margin-top: 4px;
+    }
+
+    /* ── SECTION WRAPPER ─────────────────────────────────────── */
+    .section {
+      max-width: 900px; margin: 0 auto 5rem;
+      padding: 0 2rem;
+    }
+    .section-label {
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-hint); margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--serif); font-weight: 300; font-style: italic;
+      font-size: 1.4rem; color: var(--text); margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── JAMA CARDS ──────────────────────────────────────────── */
+    .year-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .year-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.5rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      transition: border-color 0.25s, background 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .year-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--border);
+      transition: background 0.25s;
+    }
+    .year-card.active::before { background: var(--accent); }
+    .year-card:hover { border-color: var(--border-hi); background: var(--bg-surface); }
+    .year-card.active { border-color: var(--accent); }
+    .year-num {
+      font-size: 2.2rem; font-weight: 600; color: var(--accent);
+      font-family: var(--mono); line-height: 1;
+    }
+    .year-count {
+      font-size: 11px; color: var(--text-dim);
+    }
+    .year-count span { color: var(--text); font-weight: 500; }
+    .year-link {
+      display: inline-block; margin-top: auto;
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      border-radius: var(--radius); padding: 4px 10px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .year-link:hover {
+      background: var(--accent); color: var(--bg);
+      text-decoration: none;
+    }
+    .year-pending {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-hint); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 4px 10px;
+      display: inline-block; margin-top: auto;
+    }
+
+    /* ── HIGHLIGHT CARD ──────────────────────────────────────── */
+    .highlight-card {
+      background: var(--accent-dim);
+      border: 1px solid rgba(200,184,138,0.25);
+      border-radius: var(--radius-lg); padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+    [data-theme="light"] .highlight-card {
+      border-color: rgba(138,109,44,0.25);
+    }
+    .highlight-card::after {
+      content: 'M';
+      position: absolute; right: 1.5rem; bottom: -0.5rem;
+      font-family: var(--serif); font-size: 8rem; font-weight: 700;
+      font-style: italic;
+      color: var(--accent-glow);
+      line-height: 1; pointer-events: none;
+      transition: color 0.3s;
+    }
+    .hl-name {
+      font-family: var(--serif); font-size: 1.6rem; font-weight: 400;
+      font-style: italic; color: var(--text); margin-bottom: 0.25rem;
+    }
+    .hl-role {
+      font-size: 11px; letter-spacing: 0.1em; color: var(--text-dim);
+      text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      color: var(--text-dim); border-radius: var(--radius); padding: 3px 8px;
+    }
+    .tag.gold {
+      background: var(--accent-dim); border-color: rgba(200,184,138,0.3);
+      color: var(--accent);
+    }
+
+    /* ── AFFILIATIONS ────────────────────────────────────────── */
+    .affil-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    }
+    .affil-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.25rem;
+    }
+    .affil-inst {
+      font-size: 11px; font-weight: 500; color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .affil-dept {
+      font-size: 11px; color: var(--text-dim); line-height: 1.5;
+    }
+    .affil-years {
+      font-size: 10px; color: var(--text-hint); margin-top: 0.5rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── UKUBONA PANEL ───────────────────────────────────────── */
+    .ukubona-panel {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    .ukubona-left {}
+    .ukubona-label {
+      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .ukubona-desc {
+      font-size: 12px; color: var(--text-dim); line-height: 1.8;
+    }
+    .ukubona-desc strong { color: var(--text); font-weight: 500; }
+    .ukubona-quote {
+      font-family: var(--serif); font-style: italic;
+      font-size: 1rem; color: var(--text);
+      border-left: 2px solid var(--accent); padding-left: 1rem;
+      margin-top: 1.5rem; line-height: 1.6;
+    }
+    .ukubona-right {
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .u-stat {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .u-stat:last-child { border-bottom: none; }
+    .u-stat-label { font-size: 11px; color: var(--text-dim); }
+    .u-stat-value { font-size: 13px; color: var(--text); font-weight: 500; }
+    .u-stat-value.accent { color: var(--accent); }
+    .ukubona-cta {
+      display: inline-block; margin-top: 1rem;
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      border-radius: var(--radius); padding: 6px 14px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .ukubona-cta:hover {
+      background: var(--accent); color: var(--bg); text-decoration: none;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      max-width: 900px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-chain {
+      font-size: 10px; letter-spacing: 0.12em; color: var(--text-hint);
+    }
+    .footer-chain span { color: var(--accent); }
+    .footer-copy {
+      font-size: 10px; color: var(--text-hint);
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────── */
+    .divider {
+      max-width: 900px; margin: 0 auto 5rem;
+      padding: 0 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .hero { grid-template-columns: 1fr; }
+      .logo-spin-wrap { display: none; }
+      .year-grid { grid-template-columns: 1fr; }
+      .affil-grid { grid-template-columns: 1fr; }
+      .ukubona-panel { grid-template-columns: 1fr; }
+      .chain-bar { display: none; }
+    }
+
+    /* ── REDUCED MOTION ──────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .logo-orbit { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">
+      <div class="nav-logo-wrap" id="nav-logo-wrap">
+        <img id="nav-logo" src="https://abikesa.github.io/logos/assets/ukubona-dark.png" alt="Ukubona" />
+      </div>
+      <span class="nav-brand">Ukubona LLC</span>
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="https://twin-os.onrender.com/" target="_blank">twin-os ↗</a>
+      <a class="nav-link" href="https://ukubona-llc.github.io/constitution/" target="_blank">constitution ↗</a>
+      <button class="toggle-btn" id="themeToggle" aria-label="Toggle light/dark mode">☀ Light</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow">JAMA Peer Reviewer · Ukubona LLC · Twin · Operating · Ecosystem</p>
+      <h1 class="hero-name">Abimereki<br /><em>D. Muzaale</em></h1>
+      <p class="hero-degrees">MD &nbsp;·&nbsp; MPH &nbsp;·&nbsp; PhD candidate</p>
+      <p class="hero-bio">
+        <strong>Two decades at Johns Hopkins</strong> at the intersection of clinical epidemiology,
+        educational technology, and AI systems. Founder of Ukubona LLC — a sovereign learning
+        infrastructure project building <strong>digital twins</strong> for individuals, organizations,
+        and governments across all layers of civilization.<br /><br />
+        The same rigor applied to <strong>JAMA</strong> manuscript review is the invisible architecture
+        that makes LLM-augmented development produce coherent systems rather than noise.
+      </p>
+    </div>
+    <div class="logo-spin-wrap" aria-hidden="true">
+      <div class="logo-orbit" id="logo-orbit">
+        <img id="hero-logo" src="https://abikesa.github.io/logos/assets/ukubona-dark.png" alt="Ukubona rotating logo" />
+      </div>
+      <span class="logo-caption">ukubona llc<br />twin · operating · ecosystem</span>
+    </div>
+  </section>
+
+  <!-- COMPRESSION CHAIN -->
+  <div class="chain-bar" role="presentation" aria-hidden="true">
+    <div class="chain-node">
+      <span class="chain-level">3+</span>
+      <span class="chain-name">Tensor</span>
+    </div>
+    <div class="chain-node">
+      <span class="chain-level">2</span>
+      <span class="chain-name">Matrix</span>
+    </div>
+    <div class="chain-node">
+      <span class="chain-level">1</span>
+      <span class="chain-name">Vector</span>
+    </div>
+    <div class="chain-node">
+      <span class="chain-level">E</span>
+      <span class="chain-name">Eigenmode</span>
+    </div>
+    <div class="chain-node">
+      <span class="chain-level">0</span>
+      <span class="chain-name">Scalar</span>
+    </div>
+  </div>
+
+  <!-- JAMA REVIEWS -->
+  <section class="section">
+    <p class="section-label">Peer Review Record</p>
+    <h2 class="section-title">JAMA peer reviewer list</h2>
+
+    <div class="year-grid">
+      <!-- 2024 -->
+      <div class="year-card active">
+        <div class="year-num">2024</div>
+        <div class="year-count"><span>2,895</span> reviewers acknowledged</div>
+        <p style="font-size: 11px; color: var(--text-dim); line-height: 1.6;">
+          Published April 23, 2025 · Vol. 333, No. 19
+          (2025;333;(19):1735–1747)
+        </p>
+        <a class="year-link" href="https://jamanetwork.com/journals/jama/fullarticle/2833205"
+           target="_blank" rel="noopener">view list ↗</a>
+      </div>
+      <!-- 2025 -->
+      <div class="year-card active">
+        <div class="year-num">2025</div>
+        <div class="year-count"><span>2,637</span> reviewers acknowledged</div>
+        <p style="font-size: 11px; color: var(--text-dim); line-height: 1.6;">
+          Published April 13, 2026 · Vol. 335, No. 17
+          (2026;335;(17):1539–1550)
+        </p>
+        <a class="year-link" href="https://jamanetwork.com/journals/jama/fullarticle/2847843"
+           target="_blank" rel="noopener">view list ↗</a>
+      </div>
+      <!-- 2026 pending -->
+      <div class="year-card">
+        <div class="year-num" style="color: var(--text-hint);">2026</div>
+        <div class="year-count" style="color: var(--text-hint);">pending acknowledgment</div>
+        <p style="font-size: 11px; color: var(--text-hint); line-height: 1.6;">
+          Published ~April 2027 · review cycle in progress
+        </p>
+        <span class="year-pending">in progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTED LISTING -->
+  <section class="section">
+    <p class="section-label">Confirmed listing</p>
+    <h2 class="section-title">Abimereki D. Muzaale — on record</h2>
+
+    <div class="highlight-card">
+      <p class="hl-name">Abimereki D. Muzaale</p>
+      <p class="hl-role">Peer Reviewer · JAMA · American Medical Association</p>
+      <div class="tag-row">
+        <span class="tag gold">2024 list confirmed</span>
+        <span class="tag gold">2025 list confirmed</span>
+        <span class="tag">transplant epidemiology</span>
+        <span class="tag">clinical epidemiology</span>
+        <span class="tag">AI systems</span>
+        <span class="tag">educational technology</span>
+        <span class="tag">Johns Hopkins</span>
+        <span class="tag">Uganda</span>
+      </div>
+      <blockquote style="font-family: var(--serif); font-style: italic; font-size: 0.95rem;
+                          color: var(--text-dim); margin-top: 1.75rem; padding-left: 1rem;
+                          border-left: 2px solid var(--accent); line-height: 1.7;">
+        "Sovereignty is the ability to compute your own scalar."
+        <footer style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+                       color: var(--text-hint); margin-top: 0.5rem; font-family: var(--mono);
+                       font-style: normal;">
+          — Ukubona LLC, Twin·Operating·Ecosystem
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- AFFILIATIONS -->
+  <section class="section">
+    <p class="section-label">Institutional record</p>
+    <h2 class="section-title">~Two decades at the intersection</h2>
+
+    <div class="affil-grid">
+      <div class="affil-card">
+        <p class="affil-inst">Johns Hopkins University</p>
+        <p class="affil-dept">Bloomberg School of Public Health<br />
+        Clinical Epidemiology · Transplant outcomes</p>
+        <p class="affil-years">~2005 – present</p>
+      </div>
+      <div class="affil-card">
+        <p class="affil-inst">Ukubona LLC</p>
+        <p class="affil-dept">Founder · Twin · Operating · Ecosystem<br />
+        Sovereign learning infrastructure · Uganda</p>
+        <p class="affil-years">2024 – present</p>
+      </div>
+      <div class="affil-card">
+        <p class="affil-inst">PhD candidacy</p>
+        <p class="affil-dept">Pentadic framework · Bayesian inference<br />
+        Neural network visualization · LLM-augmented systems</p>
+        <p class="affil-years">in progress</p>
+      </div>
+      <div class="affil-card">
+        <p class="affil-inst">Uganda — civilizational layer</p>
+        <p class="affil-dept">National Planning Authority engagement<br />
+        135 district deployment architecture</p>
+        <p class="affil-years">2025 – present</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- UKUBONA PANEL -->
+  <section class="section">
+    <p class="section-label">For investors</p>
+    <h2 class="section-title">The company behind the credential</h2>
+
+    <div class="ukubona-panel">
+      <div class="ukubona-left">
+        <p class="ukubona-label">Ukubona LLC · twin · operating · ecosystem</p>
+        <p class="ukubona-desc">
+          <strong>"Ukubona"</strong> — to see in Zulu/Ndebele — is a sovereign learning infrastructure
+          built at the intersection of two decades of clinical epidemiology and the emergent velocity
+          of LLM-augmented development.<br /><br />
+          The framework compresses reality from <strong>tensor to scalar</strong>: full-dimensional
+          sensation → relational attention → committed intention → stable eigenmode → decisive action.
+          The same five-step chain that governs manuscript review governs national development
+          planning.<br /><br />
+          This is not a pivot. The <strong>epistemological rigor</strong> that qualified Abimereki
+          for JAMA peer review is the invisible substrate that makes the architecture coherent.
+        </p>
+        <div class="ukubona-quote">
+          The world describes the tensor. Ukubona delivers the scalar. You traverse the geodesic.
+        </div>
+        <a class="ukubona-cta" href="https://twin-os.onrender.com/" target="_blank" rel="noopener">
+          enter portal ↗
+        </a>
+      </div>
+      <div class="ukubona-right">
+        <div class="u-stat">
+          <span class="u-stat-label">Civilization layers delivered</span>
+          <span class="u-stat-value accent">3 of 5</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">Planning horizon (NPA Uganda)</span>
+          <span class="u-stat-value accent">20 yr</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">Districts in architecture</span>
+          <span class="u-stat-value accent">135</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">JAMA peer review years</span>
+          <span class="u-stat-value accent">2024 · 2025</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">Johns Hopkins tenure</span>
+          <span class="u-stat-value accent">~20 yr</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">Compression chain</span>
+          <span class="u-stat-value" style="font-size: 10px; letter-spacing: 0.08em;">T → M → V → E → S</span>
+        </div>
+        <div class="u-stat">
+          <span class="u-stat-label">Constitution</span>
+          <span class="u-stat-value">
+            <a href="https://ukubona-llc.github.io/constitution/" target="_blank" rel="noopener"
+               style="font-size: 11px;">view ↗</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="divider"></div>
+  <footer>
+    <p class="footer-chain">
+      <span>T</span> → <span>M</span> → <span>V</span> → <span>E</span> → <span>S</span>
+      &nbsp;↺&nbsp; U(s)
+    </p>
+    <p class="footer-copy">© 2026 Ukubona LLC &nbsp;·&nbsp; Twin · Operating · Ecosystem</p>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const btn  = document.getElementById('themeToggle');
+    const navLogo  = document.getElementById('nav-logo');
+    const heroLogo = document.getElementById('hero-logo');
+
+    const DARK_LOGO  = 'https://abikesa.github.io/logos/assets/ukubona-dark.png';
+    const LIGHT_LOGO = 'https://abikesa.github.io/logos/assets/ukubona-light.png';
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      const isDark = theme === 'dark';
+      btn.textContent = isDark ? '☀ Light' : '☾ Dark';
+      const logo = isDark ? DARK_LOGO : LIGHT_LOGO;
+      navLogo.src  = logo;
+      heroLogo.src = logo;
+    }
+
+    const saved = localStorage.getItem('ukb-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(saved);
+
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('ukb-theme', next);
+      applyTheme(next);
+    });
+  </script>
+</body>
+</html>
